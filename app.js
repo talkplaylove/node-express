@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/user', require('./src/routes/users-route'))
+app.use('/user', require('./src/routes/user-route'))
 
 
 module.exports = app
