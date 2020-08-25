@@ -13,5 +13,4 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/user', require('./src/routes/user-route'))
 
-
 module.exports = app
