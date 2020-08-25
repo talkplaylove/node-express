@@ -3,9 +3,14 @@ const router = express.Router()
 
 const userService = require('../services/user-service')
 
-router.post('/signin', function (req, res) {
+router.post('/signin', async (req, res) => {
   let { email, password } = req.body
-  res.send('respond with a resource')
+  try {
+    let user = userService.signin(email, password)
+    return res.json(user)
+  } catch (err) {
+    return res.status(500).json(err)
+  }
 })
 
 module.exports = router
