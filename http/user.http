@@ -1,7 +1,19 @@
+### 로그인
 POST http://localhost:3000/user/signin
 Content-Type: application/json
 
 {
-  "email": "hkhong91@gmail.com",
+  "email": "cjdeks@hanmail.net",
   "password": "1234"
+}
+
+### 회원가입
+POST http://localhost:3000/user/signup
+Content-Type: application/json
+
+{
+  "name": "청단",
+  "email": "cjdeks@hanmail.net",
+  "password": "1234",
+  "gender": "MALE"
 }

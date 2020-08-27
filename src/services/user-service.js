@@ -10,9 +10,22 @@ exports.signin = async (email, password) => {
   }
 
   let user = users[0]
-  if (!await bcrypt.compare(password, user.password)) {
+  if (!bcrypt.compareSync(password, user.password)) {
     throw new CustomError(404, '패스워드가 다릅니다.')
   }
 
   return user
+}
+
+exports.signup = async (user) => {
+  const currentDate = new Date()
+  const data = await pool.query(`insert into User set ?`, {
+    name: user.name,
+    password: bcrypt.hashSync(user.password, 10),
+    email: user.email,
+    gender: user.gender,
+    createdAt: currentDate,
+    updatedAt: currentDate
+  })
+  return data[0]
 }
