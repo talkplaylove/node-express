@@ -27,5 +27,8 @@ exports.signup = async (user) => {
     createdAt: currentDate,
     updatedAt: currentDate
   })
-  return data[0]
+  const result = data[0]
+  return {
+    id: result.insertId
+  }
 }

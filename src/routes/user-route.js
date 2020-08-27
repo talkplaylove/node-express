@@ -7,8 +7,8 @@ const CustomError = require('../advice/custom-error')
 router.post('/signin', async (req, res) => {
   let { email, password } = req.body
   try {
-    let user = await userService.signin(email, password)
-    return res.json(user)
+    let resBody = await userService.signin(email, password)
+    return res.json(resBody)
   } catch (err) {
     console.log(err)
     if (err instanceof CustomError) {
@@ -21,8 +21,8 @@ router.post('/signin', async (req, res) => {
 router.post('/signup', async (req, res) => {
   let user = req.body
   try {
-    let result = await userService.signup(user)
-    return res.json(result)
+    let resBody = await userService.signup(user)
+    return res.json(resBody)
   } catch (err) {
     console.log(err)
     if (err instanceof CustomError) {
