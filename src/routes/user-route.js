@@ -32,4 +32,18 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+router.get('/email/duplicate', async (req, res) => {
+  let { email } = req.query
+  try {
+    let resBody = await userService.duplicateEmail(email)
+    return res.json(resBody)
+  } catch (err) {
+    console.log(err)
+    if (err instanceof CustomError) {
+      return res.status(err.code).json(err)
+    }
+    return res.status(500).json(err)
+  }
+})
+
 module.exports = router

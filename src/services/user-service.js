@@ -32,3 +32,10 @@ exports.signup = async (user) => {
     id: result.insertId
   }
 }
+
+exports.duplicateEmail = async (email) => {
+  const data = await pool.query(`select count(1) as duplicated from User where email = ?`, [email])
+  return {
+    duplicated: data[0][0].duplicated > 0 ? true : false
+  }
+}

@@ -17,3 +17,6 @@ Content-Type: application/json
   "password": "1234",
   "gender": "MALE"
 }
+
+### 이메일 체크
+GET http://localhost:3000/user/email/duplicate?email=hkhong91@gmail.com
