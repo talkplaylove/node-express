@@ -6,8 +6,11 @@ const CustomError = require('../advice/custom-error')
 
 router.post('/signin', async (req, res) => {
   let { email, password } = req.body
+  let session = req.session
   try {
     let resBody = await userService.signin(email, password)
+    session.userId = resBody.id
+    session.userName = resBody.name
     return res.json(resBody)
   } catch (err) {
     console.log(err)

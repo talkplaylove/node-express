@@ -20,3 +20,6 @@ Content-Type: application/json
 
 ### 이메일 체크
 GET http://localhost:3000/user/email/duplicate?email=hkhong91@gmail.com
+
+### 이름 체크
+GET http://localhost:3000/user/name/duplicate?name=홍아지
