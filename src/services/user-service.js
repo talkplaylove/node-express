@@ -39,3 +39,10 @@ exports.duplicateEmail = async (email) => {
     duplicated: data[0][0].duplicated > 0 ? true : false
   }
 }
+
+exports.duplicateName = async (name) => {
+  const data = await pool.query(`select count(1) as duplicated from User where name = ?`, [name])
+  return {
+    duplicated: data[0][0].duplicated > 0 ? true : false
+  }
+}

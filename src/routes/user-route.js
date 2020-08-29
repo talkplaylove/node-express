@@ -46,4 +46,18 @@ router.get('/email/duplicate', async (req, res) => {
   }
 })
 
+router.get('/name/duplicate', async (req, res) => {
+  let { name } = req.query
+  try {
+    let resBody = await userService.duplicateName(name)
+    return res.json(resBody)
+  } catch (err) {
+    console.log(err)
+    if (err instanceof CustomError) {
+      return res.status(err.code).json(err)
+    }
+    return res.status(500).json(err)
+  }
+})
+
 module.exports = router
