@@ -30,6 +30,11 @@ exports.signin = async (email, password) => {
 }
 
 exports.signup = async (user) => {
+  if ((await this.duplicateEmail(user.email)).duplicated)
+    throw new CustomError(409, '다른 이메일을 입력해주세요.')
+  if ((await this.duplicateName(user.name)).duplicated)
+    throw new CustomError(409, '다른 이름을 입력해주세요.')
+
   const currentDate = new Date()
   const data = await pool.query(`insert into User set ?`,
     {
