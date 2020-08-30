@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-
-const userService = require('../services/user-service')
 const CustomError = require('../advice/custom-error')
 
-router.post('/signin', async (req, res) => {
+const userService = require('../services/user-service')
+
+router.post('/signin', async (req, res, next) => {
   let { email, password } = req.body
   let session = req.session
   try {
@@ -13,53 +13,37 @@ router.post('/signin', async (req, res) => {
     session.userName = resBody.name
     return res.json(resBody)
   } catch (err) {
-    console.log(err)
-    if (err instanceof CustomError) {
-      return res.status(err.code).json(err)
-    }
-    return res.status(500).json(err)
+    next(err)
   }
 })
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res, next) => {
   let user = req.body
   try {
     let resBody = await userService.signup(user)
     return res.json(resBody)
   } catch (err) {
-    console.log(err)
-    if (err instanceof CustomError) {
-      return res.status(err.code).json(err)
-    }
-    return res.status(500).json(err)
+    next(err)
   }
 })
 
-router.get('/email/duplicate', async (req, res) => {
+router.get('/email/duplicate', async (req, res, next) => {
   let { email } = req.query
   try {
     let resBody = await userService.duplicateEmail(email)
     return res.json(resBody)
   } catch (err) {
-    console.log(err)
-    if (err instanceof CustomError) {
-      return res.status(err.code).json(err)
-    }
-    return res.status(500).json(err)
+    next(err)
   }
 })
 
-router.get('/name/duplicate', async (req, res) => {
+router.get('/name/duplicate', async (req, res, next) => {
   let { name } = req.query
   try {
     let resBody = await userService.duplicateName(name)
     return res.json(resBody)
   } catch (err) {
-    console.log(err)
-    if (err instanceof CustomError) {
-      return res.status(err.code).json(err)
-    }
-    return res.status(500).json(err)
+    next(err)
   }
 })
 

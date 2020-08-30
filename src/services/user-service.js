@@ -6,11 +6,10 @@ exports.signin = async (email, password) => {
   const data = await pool.query(`
     select 
       id,
-      content,
-      title,
-      deleted,
-      hitCount,
-      userId,
+      email,
+      name,
+      gender,
+      password,
       createdAt,
       updatedAt
     from User 
