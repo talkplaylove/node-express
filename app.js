@@ -2,8 +2,9 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
-var session = require('express-session')
+
 var CustomError = require('./src/advice/custom-error')
+var session = require('./src/advice/session')
 
 var app = express()
 
@@ -14,11 +15,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Session Configuration
-app.use(session({
-  secret: 'N@D$EXP&ESS',
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(session)
 
 // Routes
 app.use('/user', require('./src/routes/user-route'))
