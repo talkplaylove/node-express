@@ -3,8 +3,8 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 
-var CustomError = require('./src/advice/custom-error')
-var session = require('./src/advice/session')
+var errorHandler = require('./src/advice/error-handler')
+var sessionConfig = require('./src/advice/session-config')
 
 var app = express()
 
@@ -14,19 +14,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-// Session Configuration
-app.use(session)
+app.use(sessionConfig)
 
-// Routes
 app.use('/user', require('./src/routes/user-route'))
 
-// Error Handler
-app.use(function (err, req, res, next) {
-  if (err instanceof CustomError) {
-    return res.status(err.code).json(err)
-  }
-  console.log(err)
-  return res.status(500).json(err)
-})
+app.use(errorHandler)
 
 module.exports = app
