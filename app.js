@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(sessionConfig)
 
 app.use('/user', require('./src/routes/user-route'))
+app.use('/boards', require('./src/routes/boards-route'))
 
 app.use(errorHandler)
 

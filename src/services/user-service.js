@@ -1,6 +1,7 @@
 const pool = require('../datas/pool')
-const bcrypt = require('bcrypt')
 const CustomError = require('../advice/custom-error')
+
+const bcrypt = require('bcrypt')
 
 exports.signin = async (email, password) => {
   const data = await pool.query(`

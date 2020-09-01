@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const CustomError = require('../advice/custom-error')
 
 const userService = require('../services/user-service')
 
