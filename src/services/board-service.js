@@ -43,3 +43,24 @@ exports.getBoards = async (page, size) => {
   const boards = data[0]
   return boards
 }
+
+exports.createBoard = async (board, userId) => {
+  if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+
+  const currentDate = new Date()
+  const data = await pool.query(`insert into Board set ?`,
+    {
+      title: board.title,
+      content: board.content,
+      userId: userId,
+      hitCount: 0,
+      deleted: 0,
+      createdAt: currentDate,
+      updatedAt: currentDate
+    }
+  )
+  const result = data[0]
+  return {
+    id: result.insertId
+  }
+}
