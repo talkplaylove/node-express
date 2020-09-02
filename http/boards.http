@@ -1,2 +1,5 @@
 ### 게시글 조회
 GET http://localhost:3000/boards/1
+
+### 게시글 리스트 조회
+GET http://localhost:3000/boards?page=0&size=20

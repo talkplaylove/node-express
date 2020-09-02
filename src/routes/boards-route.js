@@ -13,4 +13,14 @@ router.get('/:boardId', async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  let { page, size } = req.query
+  try {
+    let resBody = await boardService.getBoards(Number(page), Number(size))
+    return res.json(resBody)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
