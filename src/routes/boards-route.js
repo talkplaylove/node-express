@@ -34,4 +34,28 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  let board = req.body
+  let { userId } = req.session
+  try {
+    let resBody = await boardService.createBoard(board, userId)
+    return res.json(resBody)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.patch('/:boardId', async (req, res, next) => {
+  let { boardId } = req.params
+  let board = req.body
+  let { userId } = req.session
+  try {
+    board.id = boardId
+    let resBody = await boardService.updateBoard(board, userId)
+    return res.json(resBody)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

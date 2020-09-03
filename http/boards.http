@@ -1,5 +1,5 @@
 ### 게시글 조회
-GET http://localhost:3000/boards/1
+GET http://localhost:3000/boards/8
 
 ### 게시글 리스트 조회
 GET http://localhost:3000/boards?page=0&size=20
@@ -11,4 +11,13 @@ Content-Type: application/json
 {
   "title": "제목임",
   "content": "내용임"
+}
+
+### 게시글 수정
+PATCH http://localhost:3000/boards/8
+Content-Type: application/json
+
+{
+  "title": "제목8",
+  "content": "내용8"
 }
