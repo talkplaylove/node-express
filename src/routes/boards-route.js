@@ -58,4 +58,17 @@ router.patch('/:boardId', async (req, res, next) => {
   }
 })
 
+router.delete('/:boardId', async (req, res, next) => {
+  let { boardId } = req.params
+  let board = req.body
+  let { userId } = req.session
+  try {
+    board.id = boardId
+    let resBody = await boardService.deleteBoard(board, userId)
+    return res.json(resBody)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

@@ -86,3 +86,24 @@ exports.updateBoard = async (board, userId) => {
     changedRows: result.changedRows
   }
 }
+
+exports.deleteBoard = async (board, userId) => {
+  if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+
+  const currentDate = new Date()
+  const data = await pool.query(`update Board set ? where id = ?`,
+    [
+      {
+        deleted: 1,
+        updatedAt: currentDate
+      },
+      board.id
+    ]
+  )
+
+  const result = data[0]
+  return {
+    affectedRows: result.affectedRows,
+    changedRows: result.changedRows
+  }
+}
