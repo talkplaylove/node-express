@@ -4,7 +4,7 @@ const CustomError = require('../advice/custom-error')
 const bcrypt = require('bcrypt')
 
 exports.signin = async (email, password) => {
-  const data = await pool.query(`
+  const fetched = await pool.query(`
     select 
       id,
       email,
@@ -17,7 +17,7 @@ exports.signin = async (email, password) => {
     where email = ?`,
     [email]
   )
-  const users = data[0]
+  const users = fetched[0]
   if (users.length == 0) {
     throw new CustomError(404, '사용자를 찾을 수 없습니다.')
   }
@@ -37,7 +37,7 @@ exports.signup = async (user) => {
     throw new CustomError(409, '다른 이름을 입력해주세요.')
 
   const currentDate = new Date()
-  const data = await pool.query(`insert into User set ?`,
+  const inserted = await pool.query(`insert into User set ?`,
     {
       name: user.name,
       password: bcrypt.hashSync(user.password, 10),
@@ -47,32 +47,32 @@ exports.signup = async (user) => {
       updatedAt: currentDate
     }
   )
-  const result = data[0]
+  const result = inserted[0]
   return {
     id: result.insertId
   }
 }
 
 exports.duplicateEmail = async (email) => {
-  const data = await pool.query(`
+  const fetched = await pool.query(`
     select count(1) as duplicated 
     from User 
     where email = ?`,
     [email]
   )
   return {
-    duplicated: data[0][0].duplicated > 0 ? true : false
+    duplicated: fetched[0][0].duplicated > 0 ? true : false
   }
 }
 
 exports.duplicateName = async (name) => {
-  const data = await pool.query(`
+  const fetched = await pool.query(`
     select count(1) as duplicated
     from User
     where name = ?`,
     [name]
   )
   return {
-    duplicated: data[0][0].duplicated > 0 ? true : false
+    duplicated: fetched[0][0].duplicated > 0 ? true : false
   }
 }

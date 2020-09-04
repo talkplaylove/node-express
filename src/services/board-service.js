@@ -2,7 +2,7 @@ const pool = require('../datas/pool')
 const CustomError = require('../advice/custom-error')
 
 exports.getBoard = async (boardId) => {
-  const data = await pool.query(`
+  const fetched = await pool.query(`
     select
       id,
       title,
@@ -16,7 +16,7 @@ exports.getBoard = async (boardId) => {
       and deleted = 0`,
     [boardId]
   )
-  const boards = data[0]
+  const boards = fetched[0]
   if (boards.length == 0) {
     throw new CustomError(404, '게시글을 찾을 수 없습니다.')
   }
@@ -25,7 +25,7 @@ exports.getBoard = async (boardId) => {
 }
 
 exports.getBoards = async (page, size) => {
-  const data = await pool.query(`
+  const fetched = await pool.query(`
     select
       id,
       title,
@@ -40,7 +40,7 @@ exports.getBoards = async (page, size) => {
     [page, size]
   )
 
-  const boards = data[0]
+  const boards = fetched[0]
   return boards
 }
 
@@ -48,7 +48,7 @@ exports.createBoard = async (board, userId) => {
   if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
-  const data = await pool.query(`insert into Board set ?`,
+  const inserted = await pool.query(`insert into Board set ?`,
     {
       title: board.title,
       content: board.content,
@@ -59,49 +59,49 @@ exports.createBoard = async (board, userId) => {
       updatedAt: currentDate
     }
   )
-  const result = data[0]
+  const result = inserted[0]
   return {
     id: result.insertId
   }
 }
 
-exports.updateBoard = async (board, userId) => {
+exports.updateBoard = async (boardId, board, userId) => {
   if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
-  const data = await pool.query(`update Board set ? where id = ?`,
+  const updated = await pool.query(`update Board set ? where id = ?`,
     [
       {
         title: board.title,
         content: board.content,
         updatedAt: currentDate
       },
-      board.id
+      boardId
     ]
   )
 
-  const result = data[0]
+  const result = updated[0]
   return {
     affectedRows: result.affectedRows,
     changedRows: result.changedRows
   }
 }
 
-exports.deleteBoard = async (board, userId) => {
+exports.deleteBoard = async (boardId, userId) => {
   if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
-  const data = await pool.query(`update Board set ? where id = ?`,
+  const deleted = await pool.query(`update Board set ? where id = ?`,
     [
       {
         deleted: 1,
         updatedAt: currentDate
       },
-      board.id
+      boardId
     ]
   )
 
-  const result = data[0]
+  const result = deleted[0]
   return {
     affectedRows: result.affectedRows,
     changedRows: result.changedRows

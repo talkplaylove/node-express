@@ -14,12 +14,12 @@ Content-Type: application/json
 }
 
 ### 게시글 수정
-PATCH http://localhost:3000/boards/8
+PATCH http://localhost:3000/boards/6
 Content-Type: application/json
 
 {
-  "title": "제목8",
-  "content": "내용8"
+  "title": "제목6",
+  "content": "내용6"
 }
 
 ### 게시글 삭제
