@@ -25,7 +25,6 @@ var logger = winston.createLogger({
       maxFiles: 10,
       zippedArchive: true,
     }),
-
     new winstonDaily({
       level: 'error',
       datePattern: 'YYYY-MM-DD',
@@ -45,4 +44,4 @@ if (process.env.NODE_ENV !== 'production') {
   }))
 }
 
-exports.logger = logger
+module.exports = logger

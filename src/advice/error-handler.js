@@ -1,5 +1,5 @@
 const CustomError = require('./custom-error')
-const { logger } = require('../config/winston')
+const logger = require('../config/logger')
 
 module.exports = (err, req, res, next) => {
   if (err instanceof CustomError) {
