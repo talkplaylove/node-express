@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 
 var errorHandler = require('./src/advice/error-handler')
-var sessionConfig = require('./src/advice/session-config')
+var sessionConfig = require('./src/config/session')
 
 var app = express()
 
