@@ -12,7 +12,7 @@ const logFormat = printf(({ timestamp, level, message, stack }) => {
 var logger = winston.createLogger({
   format: combine(
     timestamp({
-      format: 'HH:mm:ss',
+      format: 'HH:mm:ss.SSS',
     }),
     logFormat,
   ),
