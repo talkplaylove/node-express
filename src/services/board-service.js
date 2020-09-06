@@ -44,15 +44,15 @@ exports.getBoards = async (page, size) => {
   return boards
 }
 
-exports.createBoard = async (board, userId) => {
-  if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+exports.createBoard = async (board, session) => {
+  if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
   const inserted = await pool.query(`insert into Board set ?`,
     {
       title: board.title,
       content: board.content,
-      userId: userId,
+      userId: session.userId,
       hitCount: 0,
       deleted: 0,
       createdAt: currentDate,
@@ -65,8 +65,8 @@ exports.createBoard = async (board, userId) => {
   }
 }
 
-exports.updateBoard = async (boardId, board, userId) => {
-  if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+exports.updateBoard = async (boardId, board, session) => {
+  if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
   const updated = await pool.query(`update Board set ? where id = ?`,
@@ -87,8 +87,8 @@ exports.updateBoard = async (boardId, board, userId) => {
   }
 }
 
-exports.deleteBoard = async (boardId, userId) => {
-  if (!userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+exports.deleteBoard = async (boardId, session) => {
+  if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
   const deleted = await pool.query(`update Board set ? where id = ?`,
