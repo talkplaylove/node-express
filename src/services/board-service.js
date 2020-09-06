@@ -67,7 +67,7 @@ exports.createBoard = async (body, session) => {
 
 exports.updateBoard = async (boardId, body, session) => {
   if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
-  
+
   const board = await this.getBoard(boardId)
   if (board.userId !== session.userId) throw new CustomError(403, '권한이 없습니다.')
 
@@ -92,7 +92,7 @@ exports.updateBoard = async (boardId, body, session) => {
 
 exports.deleteBoard = async (boardId, session) => {
   if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
-  
+
   const board = await this.getBoard(boardId)
   if (board.userId !== session.userId) throw new CustomError(403, '권한이 없습니다.')
 
@@ -111,5 +111,33 @@ exports.deleteBoard = async (boardId, session) => {
   return {
     affectedRows: result.affectedRows,
     changedRows: result.changedRows
+  }
+}
+
+exports.hitBoard = async (boardId, ip) => {
+  const date = new Date().toISOString().split('T')[0]
+  const fetched = await pool.query(`
+    select
+      boardId,
+      date,
+      ip
+    from
+      BoardHit
+    where
+      boardId = ?
+      and date = ?
+      and ip = ?
+    `,
+    [boardId, date, ip]
+  )
+  const hits = fetched[0]
+  if (hits.length == 0) {
+    pool.query(`insert into BoardHit set ?`,
+      {
+        boardId: boardId,
+        date: date,
+        ip: ip
+      }
+    )
   }
 }

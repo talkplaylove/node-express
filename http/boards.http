@@ -18,9 +18,12 @@ PATCH http://localhost:3000/boards/6
 Content-Type: application/json
 
 {
-  "title": "제목10",
-  "content": "내용10"
+  "title": "제목6",
+  "content": "내용6"
 }
 
 ### 게시글 삭제
 DELETE http://localhost:3000/boards/6
+
+### 게시글 조회수 증가
+POST http://localhost:3000/boards/1/hit

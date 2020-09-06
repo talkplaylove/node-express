@@ -64,4 +64,15 @@ router.delete('/:boardId', async (req, res, next) => {
   }
 })
 
+router.post('/:boardId/hit', async (req, res, next) => {
+  let { boardId } = req.params
+  let ip = req.ip.split(":").pop()
+  try {
+    boardService.hitBoard(boardId, ip)
+    return res.send()
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
