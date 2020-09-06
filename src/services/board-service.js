@@ -44,14 +44,14 @@ exports.getBoards = async (page, size) => {
   return boards
 }
 
-exports.createBoard = async (board, session) => {
+exports.createBoard = async (body, session) => {
   if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
 
   const currentDate = new Date()
   const inserted = await pool.query(`insert into Board set ?`,
     {
-      title: board.title,
-      content: board.content,
+      title: body.title,
+      content: body.content,
       userId: session.userId,
       hitCount: 0,
       deleted: 0,
@@ -65,15 +65,18 @@ exports.createBoard = async (board, session) => {
   }
 }
 
-exports.updateBoard = async (boardId, board, session) => {
+exports.updateBoard = async (boardId, body, session) => {
   if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+  
+  const board = await this.getBoard(boardId)
+  if (board.userId !== session.userId) throw new CustomError(403, '권한이 없습니다.')
 
   const currentDate = new Date()
   const updated = await pool.query(`update Board set ? where id = ?`,
     [
       {
-        title: board.title,
-        content: board.content,
+        title: body.title,
+        content: body.content,
         updatedAt: currentDate
       },
       boardId
@@ -89,6 +92,9 @@ exports.updateBoard = async (boardId, board, session) => {
 
 exports.deleteBoard = async (boardId, session) => {
   if (!session.userId) throw new CustomError(401, '사용자 인증이 필요합니다.')
+  
+  const board = await this.getBoard(boardId)
+  if (board.userId !== session.userId) throw new CustomError(403, '권한이 없습니다.')
 
   const currentDate = new Date()
   const deleted = await pool.query(`update Board set ? where id = ?`,

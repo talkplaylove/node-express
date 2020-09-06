@@ -30,19 +30,19 @@ exports.signin = async (email, password) => {
   return user
 }
 
-exports.signup = async (user) => {
-  if ((await this.duplicateEmail(user.email)).duplicated)
+exports.signup = async (body) => {
+  if ((await this.duplicateEmail(body.email)).duplicated)
     throw new CustomError(409, '다른 이메일을 입력해주세요.')
-  if ((await this.duplicateName(user.name)).duplicated)
+  if ((await this.duplicateName(body.name)).duplicated)
     throw new CustomError(409, '다른 이름을 입력해주세요.')
 
   const currentDate = new Date()
   const inserted = await pool.query(`insert into User set ?`,
     {
-      name: user.name,
-      password: bcrypt.hashSync(user.password, 10),
-      email: user.email,
-      gender: user.gender,
+      name: body.name,
+      password: bcrypt.hashSync(body.password, 10),
+      email: body.email,
+      gender: body.gender,
       createdAt: currentDate,
       updatedAt: currentDate
     }
