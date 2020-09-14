@@ -26,8 +26,8 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
-router.get('/email/duplicate', async (req, res, next) => {
-  let { email } = req.query
+router.get('/email/:email/duplicate', async (req, res, next) => {
+  let { email } = req.params
   try {
     let resBody = await userService.duplicateEmail(email)
     return res.json(resBody)
@@ -36,8 +36,8 @@ router.get('/email/duplicate', async (req, res, next) => {
   }
 })
 
-router.get('/name/duplicate', async (req, res, next) => {
-  let { name } = req.query
+router.get('/name/:name/duplicate', async (req, res, next) => {
+  let { name } = req.params
   try {
     let resBody = await userService.duplicateName(name)
     return res.json(resBody)

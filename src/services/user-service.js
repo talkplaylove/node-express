@@ -31,10 +31,8 @@ exports.signin = async (email, password) => {
 }
 
 exports.signup = async (body) => {
-  if ((await this.duplicateEmail(body.email)).duplicated)
-    throw new CustomError(409, '다른 이메일을 입력해주세요.')
-  if ((await this.duplicateName(body.name)).duplicated)
-    throw new CustomError(409, '다른 이름을 입력해주세요.')
+  await this.duplicateEmail(body.email)
+  await this.duplicateName(body.name)
 
   const currentDate = new Date()
   const inserted = await pool.query(`insert into User set ?`,
@@ -60,8 +58,9 @@ exports.duplicateEmail = async (email) => {
     where email = ?`,
     [email]
   )
-  return {
-    duplicated: fetched[0][0].duplicated > 0 ? true : false
+
+  if (fetched[0][0].duplicated > 0) {
+    throw new CustomError(409, '다른 이메일을 입력해주세요.')
   }
 }
 
@@ -72,7 +71,8 @@ exports.duplicateName = async (name) => {
     where name = ?`,
     [name]
   )
-  return {
-    duplicated: fetched[0][0].duplicated > 0 ? true : false
+
+  if (fetched[0][0].duplicated > 0) {
+    throw new CustomError(409, '다른 이름을 입력해주세요.')
   }
 }
