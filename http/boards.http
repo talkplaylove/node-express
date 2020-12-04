@@ -1,29 +1,11 @@
-### 게시글 조회
-GET http://localhost:3000/boards/8
-
 ### 게시글 리스트 조회
-GET http://localhost:3000/boards?page=0&size=20
+GET http://localhost:8080/boards
 
-### 게시글 생성
-POST http://localhost:3000/boards
+### 게시글 등록
+POST http://localhost:8080/boards
 Content-Type: application/json
 
 {
   "title": "제목임",
   "content": "내용임"
 }
-
-### 게시글 수정
-PATCH http://localhost:3000/boards/6
-Content-Type: application/json
-
-{
-  "title": "제목6",
-  "content": "내용6"
-}
-
-### 게시글 삭제
-DELETE http://localhost:3000/boards/6
-
-### 게시글 조회수 증가
-POST http://localhost:3000/boards/1/hit
