@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 require('./src/datas/mongodb')
 
-app.use('/boards', require('./src/routes/boards'))
+app.use('/boards', require('./src/routes/boards-route'))
 
 app.use(require('./src/advice/error-handler'))
 

@@ -1,11 +1,29 @@
 ### 게시글 리스트 조회
 GET http://localhost:8080/boards
 
+### 게시글 리스트 검색
+GET http://localhost:8080/boards?keyword=남자
+
+### 게시글 조회
+GET http://localhost:8080/boards/5fcb26e7863406134f27eeff
+
 ### 게시글 등록
 POST http://localhost:8080/boards
 Content-Type: application/json
 
 {
-  "title": "제목임",
+  "title": "파이썬독학",
   "content": "내용임"
 }
+
+### 게시글 수정
+PATCH http://localhost:8080/boards/5fcb26e7863406134f27eeff
+Content-Type: application/json
+
+{
+  "title": "남자 코트 추천",
+  "content": "내용1"
+}
+
+### 게시글 삭제
+DELETE http://localhost:8080/boards/5fcafc0abec6310a8b3d7cad
