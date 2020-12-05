@@ -19,7 +19,7 @@ router.get('/:boardId', (req, res, next) => {
   const { boardId } = req.params
 
   boardService.getBoard(boardId)
-    .then(board => res.json(board))
+    .then(board => res.json(board == null ? {} : board))
     .catch(err => next(err))
 })
 
@@ -44,6 +44,14 @@ router.delete('/:boardId', (req, res, next) => {
   const { boardId } = req.params
 
   boardService.deleteBoard(boardId)
+    .then(raw => res.json(raw))
+    .catch(err => next(err))
+})
+
+router.put('/:boardId/like', (req, res, next) => {
+  const { boardId } = req.params
+
+  boardService.likeBoard(boardId)
     .then(raw => res.json(raw))
     .catch(err => next(err))
 })

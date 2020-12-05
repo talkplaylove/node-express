@@ -26,4 +26,7 @@ Content-Type: application/json
 }
 
 ### 게시글 삭제
-DELETE http://localhost:8080/boards/5fcafc0abec6310a8b3d7cad
+DELETE http://localhost:8080/boards/5fcb26e7863406134f27eeff
+
+### 게시글 좋아요
+PUT http://localhost:8080/boards/5fcb26e7863406134f27eeff/like

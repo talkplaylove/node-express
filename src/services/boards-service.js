@@ -27,14 +27,13 @@ exports.getBoard = (boardId) => {
   return new Promise((resolve, reject) => {
     Board.findById(boardId, (err, doc) => {
       if (err) reject(err)
-      if (!doc) reject(new CustomError(404, '게시글이 없습니다.'))
       resolve(doc)
     })
   })
 }
 
 exports.createBoard = (body) => {
-  const {title, content} = body
+  const { title, content } = body
   return new Promise((resolve, reject) => {
     const board = new Board({
       title: title,
@@ -48,7 +47,7 @@ exports.createBoard = (body) => {
 }
 
 exports.updateBoard = (boardId, body) => {
-  const {title, content} = body
+  const { title, content } = body
   return new Promise((resolve, reject) => {
     Board.updateOne({ _id: boardId },
       {
@@ -59,7 +58,6 @@ exports.updateBoard = (boardId, body) => {
       },
       (err, raw) => {
         if (err) reject(err)
-        if (raw.n == 0) reject(new CustomError(404, '게시글이 없습니다.'))
         resolve(raw)
       })
   })
@@ -69,8 +67,22 @@ exports.deleteBoard = (boardId) => {
   return new Promise((resolve, reject) => {
     Board.deleteOne({ _id: boardId }, (err, raw) => {
       if (err) reject(err)
-      if (raw.n == 0) reject(new CustomError(404, '게시글이 없습니다.'))
       resolve(raw)
     })
+  })
+}
+
+exports.likeBoard = (boardId) => {
+  return new Promise((resolve, reject) => {
+    Board.updateOne({ _id: boardId },
+      {
+        $inc: {
+          likeCount: 1
+        }
+      },
+      (err, raw) => {
+        if (err) reject(err)
+        resolve(raw)
+      })
   })
 }
