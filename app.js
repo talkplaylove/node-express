@@ -3,6 +3,7 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var cors = require('cors')
+require('dotenv').config()
 
 var app = express()
 
@@ -19,6 +20,6 @@ app.use(cors())
 app.use('/boards', require('./src/routes/boards-route'))
 app.use('/videos', require('./src/routes/videos-route'))
 
-app.use(require('./src/advice/error-handler'))
+app.use(require('./src/exception/error-handler'))
 
 module.exports = app

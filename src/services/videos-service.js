@@ -1,11 +1,24 @@
 const Video = require('../datas/model/Video')
-const CustomError = require('../advice/custom-error')
+const DateUtils = require('../utils/date-utils')
 
 exports.getVideos = () => {
   return new Promise((resolve, reject) => {
     Video.find((err, docs) => {
+      let a = {
+        a: 1,
+        b: "3"
+      }
       if (err) reject(err)
-      resolve(docs)
+      let videos = docs.map(doc => ({
+        _id: doc._id,
+        title: doc.title,
+        thumbnail: doc.thumbnail,
+        likeCount: doc.likeCount,
+        createdDiff: DateUtils.diffPerUnit(new Date(), doc.createdAt),
+        createdAt: doc.createdAt,
+        updatedAt: doc.updatedAt
+      }))
+      resolve(videos)
     })
   })
 }

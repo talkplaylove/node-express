@@ -6,6 +6,6 @@ POST http://localhost:8080/videos
 Content-Type: application/json
 
 {
-  "title": "드라마 OST :heartpulse: 영화 사운드 트랙 컬렉션 (광고 없음)",
-  "thumbnail": "http://localhost:3000/img/3.jpg"
+  "title": "[LIVE] SBS 8뉴스 - \"백신 4천4백만 명 분량 도입\"…언제 누구부터 맞을 수 있나? 外 12/8(화) | 모바일24",
+  "thumbnail": "http://localhost:8080/img/8.jpg"
 }

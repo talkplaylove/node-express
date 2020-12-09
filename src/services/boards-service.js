@@ -1,8 +1,8 @@
 const Board = require('../datas/model/Board')
-const CustomError = require('../advice/custom-error')
 
 exports.getBoards = () => {
   return new Promise((resolve, reject) => {
+    const now = new Date()
     Board.find((err, docs) => {
       if (err) reject(err)
       resolve(docs)

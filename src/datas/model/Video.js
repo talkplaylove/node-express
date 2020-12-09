@@ -6,9 +6,10 @@ const collectionName = 'Video'
 const Video = new Schema({
   title: { type: String, required: true },
   thumbnail: { type: String, require: true},
-  likeCount: { type: Number, default: 0 }
+  likeCount: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 }, {
-  timestamps: true,
   versionKey: false
 })
 
