@@ -1,0 +1,11 @@
+### 비디오 썸네일 리스트 조회
+GET http://localhost:8080/videos
+
+### 비디오 등록
+POST http://localhost:8080/videos
+Content-Type: application/json
+
+{
+  "title": "드라마 OST :heartpulse: 영화 사운드 트랙 컬렉션 (광고 없음)",
+  "thumbnail": "http://localhost:3000/img/3.jpg"
+}
