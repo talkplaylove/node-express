@@ -11,13 +11,13 @@ router.get('/', (req, res, next) => {
         $regex: `.*${keyword}.*`
       }
     }, (err, docs) => {
-      if (err) next(err)
-      res.json(docs)
+      if (err) return next(err)
+      return res.json(docs)
     })
   } else {
     Board.find((err, docs) => {
-      if (err) next(err)
-      res.json(docs)
+      if (err) return next(err)
+      return res.json(docs)
     })
   }
 })
@@ -26,8 +26,8 @@ router.get('/:boardId', (req, res, next) => {
   const { boardId } = req.params
 
   Board.findById(boardId, (err, doc) => {
-    if (err) next(err)
-    res.json(doc == null ? {} : doc)
+    if (err) return next(err)
+    return res.json(doc == null ? {} : doc)
   })
 })
 
@@ -39,8 +39,8 @@ router.post('/', (req, res, next) => {
     content: content
   })
   board.save((err, doc) => {
-    if (err) next(err)
-    res.json(doc)
+    if (err) return next(err)
+    return res.json(doc)
   })
 })
 
@@ -55,8 +55,8 @@ router.patch('/:boardId', (req, res, next) => {
         content: content
       }
     }, (err, raw) => {
-      if (err) next(err)
-      res.json(raw)
+      if (err) return next(err)
+      return res.json(raw)
     })
 })
 
@@ -64,8 +64,8 @@ router.delete('/:boardId', (req, res, next) => {
   const { boardId } = req.params
 
   Board.deleteOne({ _id: boardId }, (err, raw) => {
-    if (err) next(err)
-    res.json(raw)
+    if (err) return next(err)
+    return res.json(raw)
   })
 })
 
@@ -75,11 +75,11 @@ router.put('/:boardId/like', (req, res, next) => {
   Board.updateOne({ _id: boardId },
     {
       $inc: {
-        likeCount: 1
+        likes: 1
       }
     }, (err, raw) => {
-      if (err) next(err)
-      res.json(raw)
+      if (err) return next(err)
+      return res.json(raw)
     })
 })
 

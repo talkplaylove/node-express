@@ -1,6 +1,9 @@
 ### 비디오 썸네일 리스트 조회
 GET http://localhost:8080/videos
 
+### 비디오 상세 조회
+GET http://localhost:8080/videos/5fd097c10c31f908f7dc999a
+
 ### 비디오 등록
 POST http://localhost:8080/videos
 Content-Type: application/json

@@ -29,4 +29,4 @@ Content-Type: application/json
 DELETE http://localhost:8080/boards/5fd0d49f05d35f1ea1ce0c26
 
 ### 게시글 좋아요
-PUT http://localhost:8080/boards/5fcb26e7863406134f27eeff/like
+PUT http://localhost:8080/boards/5fd0d4519361331e869ee5a4/like

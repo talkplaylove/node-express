@@ -6,10 +6,10 @@ const collectionName = 'Board'
 const Board = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
-  likeCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  likes: { type: Number, default: 0 },
+  hates: { type: Number, default: 0 }
 }, {
+  timestamps: true,
   versionKey: false
 })
 
