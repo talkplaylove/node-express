@@ -2,12 +2,26 @@ const express = require('express')
 const router = express.Router()
 
 const Video = require('../datas/model/Video')
+const DateUtils = require('../utils/date-utils')
 
 router.get('/', (req, res, next) => {
-  Video.find((err, docs) => {
-    if (err) return next(err)
-    return res.json(docs)
-  })
+  const { page, size } = req.query
+  const limit = Number(size)
+
+  Video.find()
+    .limit(limit)
+    .skip(page * limit)
+    .sort({ _id: 'asc' })
+    .exec((err, docs) => {
+      if (err) return next(err)
+      return res.json(docs.map(doc => ({
+        _id: doc._id,
+        thumbnail: doc.thumbnail,
+        title: doc.title,
+        likes: doc.likes,
+        displayedAt: DateUtils.displayedAt(doc.createdAt)
+      })))
+    })
 })
 
 router.get('/:videoId', (req, res, next) => {
