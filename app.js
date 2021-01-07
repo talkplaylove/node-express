@@ -17,8 +17,7 @@ require('./src/datas/mongodb')
 
 app.use(cors())
 
-app.use('/boards', require('./src/routes/boards'))
-app.use('/videos', require('./src/routes/videos'))
+app.use('/videos', require('./src/routes/videos.route'))
 
 app.use(require('./src/exception/error-handler'))
 

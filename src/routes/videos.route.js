@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Video = require('../datas/model/Video')
-const DateUtils = require('../utils/date-utils')
+const DateUtils = require('../utils/date.util')
 
 router.get('/', (req, res, next) => {
   const { page, size } = req.query

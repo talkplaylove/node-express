@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const collectionName = 'Video'
+const name =  __filename.slice(__dirname.length + 1, -3)
 const Video = new Schema({
   title: { type: String, required: true },
   thumbnail: { type: String, require: true},
@@ -13,4 +13,4 @@ const Video = new Schema({
   versionKey: false
 })
 
-module.exports = mongoose.model(collectionName, Video)
+module.exports = mongoose.model(name, Video)
